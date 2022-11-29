@@ -367,6 +367,10 @@ func ListContainers(name string, cgroupPaths map[string]string, listType contain
 		})
 	}
 
+	for k, v := range ret {
+		klog.Infof("ListContainers reset k: %s, v: %s", k, v.Name)
+	}
+
 	return ret, nil
 }
 
@@ -437,3 +441,4 @@ func (m deviceIdentifierMap) Find(major, minor uint64, namer DeviceNamer) string
 	m[d] = s
 	return s
 }
+

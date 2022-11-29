@@ -52,6 +52,10 @@ func NewRawContainerWatcher() (watcher.ContainerWatcher, error) {
 		return nil, fmt.Errorf("failed to find supported cgroup mounts for the raw factory")
 	}
 
+	for k, v := range cgroupSubsystems {
+		klog.Infof("cgroupSubsystems------ key: %v, value: %v", k, v)
+	}
+	
 	watcher, err := common.NewInotifyWatcher()
 	if err != nil {
 		return nil, err

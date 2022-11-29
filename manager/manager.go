@@ -1116,6 +1116,7 @@ func (m *manager) detectSubcontainers(containerName string) error {
 
 	// Add the new containers.
 	for _, cont := range added {
+		klog.Infof("added----------- %s", cont.Name)
 		err = m.createContainer(cont.Name, watcher.Raw)
 		if err != nil {
 			klog.Errorf("Failed to create existing container: %s: %s", cont.Name, err)
@@ -1124,6 +1125,7 @@ func (m *manager) detectSubcontainers(containerName string) error {
 
 	// Remove the old containers.
 	for _, cont := range removed {
+		klog.Infof("removed----------- %s", cont.Name)
 		err = m.destroyContainer(cont.Name)
 		if err != nil {
 			klog.Errorf("Failed to destroy existing container: %s: %s", cont.Name, err)
@@ -1168,6 +1170,7 @@ func (m *manager) watchForNewContainers(quit chan error) error {
 						err = m.createContainer(event.Name, event.WatchSource)
 					}
 				case event.EventType == watcher.ContainerDelete:
+					klog.Infof("get delete event %s", event.Name)
 					err = m.destroyContainer(event.Name)
 				}
 				if err != nil {
@@ -1402,3 +1405,4 @@ func (f partialFailure) OrNil() error {
 	}
 	return f
 }
+
